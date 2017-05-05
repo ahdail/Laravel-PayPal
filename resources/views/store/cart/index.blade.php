@@ -14,23 +14,28 @@
 		</tr>
 	</thead>
 	<tbody>
-		@for ($i = 1; $i <= 5; $i++)
+		@forelse ($products as $product)
 		<tr>
 			<td>
 				<div>
 					<img style="width: 250px;" src="{{url('assets/images/temp/tshirt.psd')}}" class="product-item-img-cart">
-					<p class="cart-name-item">My Product Name</p>
+					<p class="cart-name-item">{{$product['item']->name}}</p>
 				</div>
 			</td>
-			<td>R$ 30.00</td>
+			<td>R$ {{$product['item']->price}}</td>
 			<td>
-				<a href="" class="item-add-remove">-</a>
-				2
-				<a href="" class="item-add-remove">+</a>			
+				<a href="{{route('decrement.cart', $product['item']->id)}}" class="item-add-remove">-</a>
+				{{$product['qtd']}}
+				<a href="{{route('add.cart', $product['item']->id)}}" class="item-add-remove">+</a>			
 			</td>
 			<td>60</td>
 			</tr>
-			@endfor
+			@empty
+			<tr>
+				<td colspan="20">Carrinho vazio</td>
+			</tr>
+
+			@endforelse
 		
 	</tbody>
 </table>

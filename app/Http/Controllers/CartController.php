@@ -15,9 +15,10 @@ class CartController extends Controller
 
     	$cart = Session::get('cart');
 
-    	dd($cart->getItems());
+    	//dd($cart->getItems());
+    	$products = $cart->getItems();
 
-    	return view ('store.cart.index', compact('title'));
+    	return view ('store.cart.index', compact('title', 'products'));
     }
 
     public function add(Request $request, $id)
