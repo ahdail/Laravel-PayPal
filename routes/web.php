@@ -11,8 +11,8 @@
 |
 */
 
-
 $this->get('/', 'StoreController@index')->name('home');
 $this->get('carrinho', 'CartController@index')->name('cart');
 $this->get('meu-prefil', 'UserController@profile')->name('user.profile');
-$this->get('add-cart/{id}', 'CartController@add')->name('add.cart');
+//$this->get('add-cart/{id}', 'CartController@add')->name('add.cart');
+$this->get('adicionar-carrinho/{id}', 'CartController@add')->name('add.cart');
