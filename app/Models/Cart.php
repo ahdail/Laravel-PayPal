@@ -32,13 +32,29 @@ class Cart extends Model
     			'qtd' 	=> 1, 
     		];	
     	}
+    }
 
-    	
+    public function decrement(Product $product)
+    {
+    	if (isset ($this->items[$product->id])){
+    		
+    		if ($this->items[$product->id]['qtd'] == 1){
+    			unset($this->items[$product->id]);
+	    	} else {
+	    		$this->items[$product->id] = [
+	    			'item' 	=> $product,
+	    			'qtd' 	=> $this->items[$product->id]['qtd'] - 1, 
+	    		];
+	    	}
+	    }	
     }
 
     public function getItems()
     {
     	return $this->items;
     }
+
+
+    
 }
 
