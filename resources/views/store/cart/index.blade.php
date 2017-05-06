@@ -18,7 +18,8 @@
 		<tr>
 			<td>
 				<div>
-					<img style="width: 250px;" src="{{url('assets/images/temp/tshirt.psd')}}" class="product-item-img-cart">
+					<img style="width: 250px;" 
+					src="{{url('assets/images/temp/{$product->image}')}}" class="product-item-img-cart">
 					<p class="cart-name-item">{{$product['item']->name}}</p>
 				</div>
 			</td>
@@ -28,7 +29,7 @@
 				{{$product['qtd']}}
 				<a href="{{route('add.cart', $product['item']->id)}}" class="item-add-remove">+</a>			
 			</td>
-			<td>60</td>
+			<td>R$ {{$product['qtd'] * $product['item']->price}}</td>
 			</tr>
 			@empty
 			<tr>
@@ -41,7 +42,7 @@
 </table>
 
 <div class="total-cart">
-	<p><strong>Total: </strong> R$ 5.0000</p>	
+	<p><strong>Total: </strong> R$ {{$total}}</p>	
 </div>
 
 <div class="cart-finish">

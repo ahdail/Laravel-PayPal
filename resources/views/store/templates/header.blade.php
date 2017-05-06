@@ -19,18 +19,30 @@
         <li>
           <a href="{{route('cart')}}">
             Meu carrinho <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <span class="badge">4</span>
+            <span class="badge">
+            @if(Session::has('cart'))
+              {{Session::get('cart')->totalItems()}}
+
+            @else
+
+            @endif
+            </span>
           </a>
         </li>
+        @if (auth::check())
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Name <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{auth()->user()->name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{route('user.profile')}}">Perfil</a></li>
             <li><a href="#">Alterar senha</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Sair</a></li>
+            <li><a href="{{route('user.logout')}}">Sair</a></li>
           </ul>
         </li>
+        @else
+          <li><a href="{{route('login')}}">Entrar</a></li>
+        @endif
+        
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

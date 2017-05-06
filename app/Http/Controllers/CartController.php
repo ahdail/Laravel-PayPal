@@ -13,12 +13,14 @@ class CartController extends Controller
     {	
     	$title = "Meu Carrinho - T-Shirt Art";
 
-    	$cart = Session::get('cart');
+    	//$cart = Session::get('cart');
+    	$cart = Session::has('cart') ? Session::get('cart') : new Cart;
+    	$total = $cart->total();
 
     	//dd($cart->getItems());
     	$products = $cart->getItems();
 
-    	return view ('store.cart.index', compact('title', 'products'));
+    	return view ('store.cart.index', compact('title', 'products', 'total'));
     }
 
     public function add(Request $request, $id)
@@ -41,7 +43,7 @@ class CartController extends Controller
     		return redirect()->route('home');
 
     	$cart = new Cart;
-    	$cart->decrement($product);
+    	$cart->decrementItem($product);
 
     	$request->session()->put('cart', $cart);
 

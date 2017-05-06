@@ -34,7 +34,7 @@ class Cart extends Model
     	}
     }
 
-    public function decrement(Product $product)
+    public function decrementItem(Product $product)
     {
     	if (isset ($this->items[$product->id])){
     		
@@ -54,7 +54,26 @@ class Cart extends Model
     	return $this->items;
     }
 
+    public function total()
+    {
+    	$total = 0;
 
-    
+    	if (count ($this->items) == 0)
+    		return $total;
+
+    	foreach ($this->items as $items) {
+    		$subTotalItem = $items['item']->price * $items['qtd'];
+
+    		$total += $subTotalItem;
+    	}
+
+    	return $total;
+    }
+
+    public function totalItems()
+    {
+    	return count($this->items);
+    }
+
 }
 
