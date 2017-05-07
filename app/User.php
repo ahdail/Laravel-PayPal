@@ -26,4 +26,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public $rulesProfile = [
+        'name'=> 'required|min:3|max:100',
+    ];
+
+    public $rulesPassword = [
+        'password'=> 'required|min:5|max:105|confirmed',
+    ];
+
 }

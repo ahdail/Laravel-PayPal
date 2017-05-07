@@ -13,7 +13,6 @@
 Auth::routes();
 $this->get('/', 'StoreController@index')->name('home');
 $this->get('carrinho', 'CartController@index')->name('cart');
-$this->get('meu-prefil', 'UserController@profile')->name('user.profile');
 //$this->get('add-cart/{id}', 'CartController@add')->name('add.cart');
 $this->get('adicionar-carrinho/{id}', 'CartController@add')->name('add.cart');
 $this->get('decrementar-carrinho/{id}', 'CartController@decrement')->name('decrement.cart');
@@ -21,4 +20,10 @@ $this->get('decrementar-carrinho/{id}', 'CartController@decrement')->name('decre
 $this->get('logout', 'UserController@logout')->name('user.logout');
 
 
-
+$this->group(['middleware' => 'auth'], function(){
+	$this->get('meu-prefil', 'UserController@profile')->name('user.profile');
+	$this->post('atualizar-perfil', 'UserController@profileUpdate')->name('update.profile');
+	
+	$this->get('minha-senha', 'UserController@password')->name('user.password');
+	$this->post('atualizar-senha', 'UserController@passwordUpdate')->name('update.password');
+});
