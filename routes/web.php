@@ -26,4 +26,8 @@ $this->group(['middleware' => 'auth'], function(){
 	
 	$this->get('minha-senha', 'UserController@password')->name('user.password');
 	$this->post('atualizar-senha', 'UserController@passwordUpdate')->name('update.password');
+
+	//PayPal - Payment
+	$this->get('return-paypal', 'PayPalController@returnPayPal')->name('return.paypal');
+	$this->get('paypal', 'PayPalController@paypal')->name('paypal');
 });

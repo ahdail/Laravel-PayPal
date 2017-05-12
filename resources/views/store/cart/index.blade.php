@@ -45,8 +45,13 @@
 	<p><strong>Total: </strong> R$ {{$total}}</p>	
 </div>
 
+
+@if (Session::has('cart') && Session::get('cart')->totalItems() >= 1)
 <div class="cart-finish">
-		<a href="" class="btn-finish">Finalizar compra</a>
+		<a href="{{route('paypal')}}" class="btn-finish">Finalizar compra</a>
 </div>
+@endif
+
+
 
 @endsection
