@@ -17,12 +17,23 @@ class PayPalController extends Controller
     {
         $cart = New Cart();
         $paypay = new PayPal($cart);
-        
+
+        //dd($paypay->generate());
         return redirect()->away($paypay->generate());
     }
     
     public function returnPayPal(Request $request)
     {
-        dd($request->all());
+        $success    = ($request->success == 'true') ? true : false;
+        $paymentId  = $request->paymentId;
+        $token      = $request->token;
+        $payerID    = $request->PayerID;
+
+        if( !$success )
+            dd('Pedido Cancelado!!!');
+
+        $cart = new Cart;
+        $paypal = new PayPal($cart);
+        $paypal->execute($paymentId, $token, $payerID);
     }
 }
