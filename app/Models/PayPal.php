@@ -13,6 +13,7 @@ use PayPal\Api\Transaction;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 use App\Models\Cart;
+use PayPal\Api\PaymentExecution;
 
 class PayPal extends Model
 {
@@ -163,6 +164,15 @@ class PayPal extends Model
     {
         $payment = Payment::get($paymentId, $this->apiContext);
 
-        dd($payment);
+        if( $payment->getState() != 'approved' ) {
+            $execution = new PaymentExecution();
+            $execution->setPayerId($payerID);
+
+            $result = $payment->execute($execution, $this->apiContext);
+
+            return $result->getState();
+        }
+
+        return $payment->getState();
     }
 }

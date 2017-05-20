@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PayPal;
 use App\Models\Cart;
-
+use App\Models\Order;
 
 class PayPalController extends Controller
 {
@@ -15,14 +15,13 @@ class PayPalController extends Controller
 
     public function paypal()
     {
-        $cart = New Cart();
+        $cart = new Cart;
         $paypay = new PayPal($cart);
 
-        //dd($paypay->generate());
         return redirect()->away($paypay->generate());
     }
-    
-    public function returnPayPal(Request $request)
+
+    public function returnPayPal(Request $request, Order $order)
     {
         $success    = ($request->success == 'true') ? true : false;
         $paymentId  = $request->paymentId;
@@ -34,6 +33,15 @@ class PayPalController extends Controller
 
         $cart = new Cart;
         $paypal = new PayPal($cart);
-        $paypal->execute($paymentId, $token, $payerID);
+        $response = $paypal->execute($paymentId, $token, $payerID);
+
+        if( $response == 'approved' ){
+            $order->where('payment_id', $paymentId)
+                ->update(['status' => 'approved']);
+
+            return redirect()->route('home');
+        } else {
+            dd('Pedido não aprovado!');
+        }
     }
 }
